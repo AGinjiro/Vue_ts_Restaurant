@@ -2,6 +2,15 @@
 import { type } from 'os'
 import { ref } from 'vue'
 
+// enum RestaurantStatus {
+//   WantToTry = 'Want to Try',
+//   Recommended = 'Recommended',
+//   DoNotRecommended = 'Do Not Recommended',
+//   MustTry = 'Must Try'
+// }
+
+// interface Restaurant{...status?: RestaurantStatus}
+
 /**
  * Restaurants
  *
@@ -29,10 +38,11 @@ function addRestaurant() {
   restaurantList.value.push({
     name: newRestaurant.value.name,
     address: '',
-    status: 'Want to Try',
+    status: newRestaurant.value.status,
     dishes: []
   })
   newRestaurant.value.name = ''
+  newRestaurant.value.address = ''
 }
 </script>
 
@@ -45,30 +55,31 @@ function addRestaurant() {
 
     <form @submit.prevent="addRestaurant">
       <div>
-        <label for="restaurant-name">Restaurant Name</label>
+        <label for="restaurant-name">Restaurant Name: </label>
         <input id="restaurant-name" v-model="newRestaurant.name" type="text" />
-        <button type="submit">Add Restaurant</button>
       </div>
 
       <div>
-        <label for="restaurant-address">Restaurant Address</label>
+        <label for="restaurant-address">Restaurant Address: </label>
         <input id="restaurant-address" v-model="newRestaurant.address" type="text" />
-        <button type="submit">Add Restaurant</button>
       </div>
 
       <div>
-        <label for="restaurant-status">Restaurant Status</label>
+        <label for="restaurant-status">Restaurant Status: </label>
         <select name="restaurant-status" id="restaurant.status" v-model="newRestaurant.status">
           <option v-for="status in statusList" :value="status" :key="status">
             {{ status }}
           </option>
         </select>
+        <p></p>
         <button type="submit">Add Restaurant</button>
       </div>
     </form>
 
     <ul>
-      <li v-for="restaurant in restaurantList" :key="restaurant.name">{{ restaurant.name }}</li>
+      <li v-for="restaurant in restaurantList" :key="restaurant.name">
+        {{ restaurant.name }} - {{ restaurant.status }}
+      </li>
     </ul>
   </main>
 </template>
